@@ -21,6 +21,7 @@
         <ion-input required [formControl]="plantForm.controls['name']" name="name"></ion-input>
       </ion-item>
 
+
       <ion-item>
         <ion-label color="primary" floating>Place</ion-label>
         <ion-input [formControl]="plantForm.controls['place']" name="place"></ion-input>
@@ -30,6 +31,17 @@
         <ion-label color="primary" floating>Comment</ion-label>
         <ion-input [formControl]="plantForm.controls['comment']" name="comment"></ion-input>
       </ion-item>
+
+      <ion-buttons>
+        <button ion-button large block icon-left (click)="takePicture($event)">
+          <ion-icon name="camera"></ion-icon>
+          Take picture
+        </button>
+      </ion-buttons>
+
+      <div class="picture-preview">
+        <img *ngIf="this.base64Image" src="{{this.base64Image}}">
+      </div>
 
       <ion-buttons>
         <button ion-button large block icon-left type="submit" [color]="plantForm.valid ? 'primary' : 'danger'" [disabled]="!plantForm.valid">
