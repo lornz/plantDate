@@ -22,13 +22,15 @@ export class PlantsService {
 
     public savePlants():void {
       this.storage.ready().then(() => {
-        console.log('savePlants');
-
         let plantsJSON:string = JSON.stringify(this.plants);
-        console.log('savePlants -> plantsJSON', plantsJSON);
-
         this.storage.set('plants', plantsJSON);
-      });
+
+        if (!this.plantsLoaded) {
+          this.loadPlants();
+        }
+      }).catch((e) => {
+        console.warn('0 ERROR SAVING PLANTS', e);
+      });;
     }
 
     public loadPlants():void {
@@ -43,7 +45,7 @@ export class PlantsService {
               plantsJSON = JSON.parse(val);
             }
             catch (e) {
-              console.warn('ERROR LOADING PLANTS');
+              console.warn('4 ERROR LOADING PLANTS');
               this.loadingState = LoadingState.failed;
               return;
             }
@@ -51,7 +53,7 @@ export class PlantsService {
             // Object geladen
             let typeOfPlants = typeof plantsJSON;
             if (typeOfPlants !== 'object') {
-              console.warn('ERROR LOADING PLANTS');
+              console.warn('3 ERROR LOADING PLANTS');
               this.loadingState = LoadingState.failed;
               return;
             }
@@ -60,7 +62,7 @@ export class PlantsService {
             plantsJSON.forEach((plant:any) => {
               let typeOfPlant = typeof plant;
               if (typeOfPlant !== 'object') {
-                console.warn('ERROR LOADING PLANTS');
+                console.warn('2 ERROR LOADING PLANTS');
                 this.loadingState = LoadingState.failed;
                 return;
               }
@@ -73,13 +75,22 @@ export class PlantsService {
               this.loadingState = LoadingState.loaded;
             }
           }).catch((e) => {
-            console.warn('ERROR LOADING PLANTS');
-            this.loadingState = LoadingState.failed;
+            // Das ist ok!
+            // console.warn('1 ERROR LOADING PLANTS', e);
+            // this.loadingState = LoadingState.failed;
           });
       }).catch((e) => {
-        console.warn('ERROR LOADING PLANTS');
+        console.warn('0 ERROR LOADING PLANTS', e);
         this.loadingState = LoadingState.failed;
       });
+    }
+
+    public get emptyState():boolean {
+      return this.plants.length === 0 && this.loadingState !== LoadingState.failed;
+    }
+
+    public get plantsLoaded():boolean {
+      return this.loadingState === LoadingState.loaded;
     }
 }
 

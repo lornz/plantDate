@@ -1,5 +1,5 @@
 
-<ion-content padding scrollY="true">
+<ion-content class="bg-color-light" padding scrollY="true">
   <ion-card *ngFor="let plant of plants; let i = index;">
     <img src={{plant.image}} />
     <ion-card-header>
@@ -11,7 +11,7 @@
     </ion-card-content>
   </ion-card>
 
-  <ion-card *ngIf="!plantsLoaded">
+  <ion-card *ngIf="!plantsService.plantsLoaded && !plantsService.emptyState">
     <ion-card-header>
     Plants could not be loaded.
     </ion-card-header>
@@ -19,6 +19,20 @@
     <ion-card-content>
       Sorry :(
     </ion-card-content>
+  </ion-card>
+
+  <ion-card *ngIf="plantsService.emptyState">
+    <img src="assets/empty-state-plant.jpg" />
+    <ion-card-title padding>
+    Hello!
+    </ion-card-title>
+  </ion-card>
+
+  <ion-card *ngIf="plantsService.emptyState">
+    <img src="assets/empty-state-new.jpg" />
+    <ion-card-header>
+    Start with adding a new plant
+    </ion-card-header>
   </ion-card>
 
   <ion-fab right bottom>

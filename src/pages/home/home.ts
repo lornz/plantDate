@@ -21,9 +21,6 @@ export class HomePage {
     return this.plantsService.plants;
   }
 
-  public get plantsLoaded():boolean {
-    return this.plantsService.loadingState === LoadingState.loaded;
-  }
-  
+
 }
 
