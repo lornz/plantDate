@@ -1,7 +1,9 @@
 import { Component, Renderer } from '@angular/core';
 import { NavController } from 'ionic-angular';
+import { AlertController } from 'ionic-angular';
 import { AddPage } from '../add/add';
 import { PlantsService, Plant } from '../../services/plants.service';
+import { AppService } from '../../services/app.service';
 
 @Component({
   selector: 'page-home',
@@ -10,17 +12,18 @@ import { PlantsService, Plant } from '../../services/plants.service';
 export class HomePage {
   private flipping:boolean;
 
-  constructor(public navCtrl: NavController, public plantsService:PlantsService, private renderer:Renderer) {
+  constructor(public navCtrl: NavController, public plantsService:PlantsService, 
+              public alertCtrl: AlertController,
+              private renderer:Renderer, private appService:AppService) {
   }
 
-  public goToAddPage():void {
+  public goToAddPage(mode:string, editPlant:Plant):void {
+    this.plantsService.plantForEditing = editPlant;
+    this.appService.plantDetailMode = mode;
     this.navCtrl.push(AddPage)
   }
 
   public cardPress(event:any, plant:Plant, card:Element):void {
-    // console.log('card press', event, plant);
-    // event.srcEvent.stopPropagation();
-    // event.srcEvent.preventDefault();
     event.stopPropagation();
     event.preventDefault();
 
@@ -42,11 +45,32 @@ export class HomePage {
     event.preventDefault();
   }
 
+  private showConfirm(plant:Plant) {
+    let confirm = this.alertCtrl.create({
+      title: 'Delete ' + plant.name +'?',
+      message: 'Are you sure you want to delete this plant?',
+      buttons: [
+        {
+          text: 'No',
+          handler: () => {
+          }
+        },
+        {
+          text: 'Yes',
+          handler: () => {
+            this.plantsService.deletePlant(plant);
+          }
+        }
+      ]
+    });
+    confirm.present();
+  }
+
   public deleteButton(event:Event, plant:Plant):void {
     if (this.flipping) {
       return;
     }
-    this.plantsService.deletePlant(plant);
+    this.showConfirm(plant);
   }
 
   public get plants():Array<Plant> {

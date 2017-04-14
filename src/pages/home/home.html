@@ -23,7 +23,7 @@
           <ion-icon item-right name="close-circle" (click)="flipCard(plantCard, false)"></ion-icon>
         </ion-item>
         
-        <ion-item>
+        <ion-item (tap)="goToAddPage('edit', plant)">
           <ion-icon name="create" item-left large></ion-icon>
           <h2>Edit plant details</h2>
           <p>Name, Place, Picture, ...</p>
@@ -69,7 +69,7 @@
   </ion-card>
 
   <ion-fab right bottom>
-    <button ion-fab color="danger" (tap)="goToAddPage()"><ion-icon name="add"></ion-icon></button>
+    <button ion-fab color="danger" (tap)="goToAddPage('add')"><ion-icon name="add"></ion-icon></button>
   </ion-fab>
 </ion-content>
 

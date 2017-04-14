@@ -5,6 +5,7 @@ import { Storage } from '@ionic/storage';
 @Injectable()
 export class PlantsService {
     public plants:Array<Plant> = [];
+    public plantForEditing:Plant;
     public loadingState:LoadingState = LoadingState.unknown;
 
     constructor(private storage:Storage) {
@@ -13,13 +14,25 @@ export class PlantsService {
 
     public addPlant(plant:Plant):void {
         this.plants.splice(0, 0, plant);
+        this.savePlants();
     }
 
     public deletePlant(plantToDelete:Plant):void {
-      console.log('deletePlant', plantToDelete);
+      // console.log('deletePlant', plantToDelete);
       this.plants.forEach((plant:Plant, index:number) => {
         if (plant.id === plantToDelete.id) {
           this.plants.splice(index, 1);
+          this.savePlants();
+          return;
+        }
+      });
+    }
+
+    public replacePlant(plantToDelete:Plant, plantToAdd:Plant):void {
+      // console.log('replacePlant', plantToDelete, plantToAdd);
+       this.plants.forEach((plant:Plant, index:number) => {
+        if (plant.id === plantToDelete.id) {
+          this.plants.splice(index, 1, plantToAdd);
           this.savePlants();
           return;
         }

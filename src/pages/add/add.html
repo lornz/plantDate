@@ -1,8 +1,11 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>
+    <ion-title *ngIf="isInAddMode">
       Add new plant
+    </ion-title>
+    <ion-title *ngIf="!isInAddMode">
+      Edit plant
     </ion-title>
 
     <ion-buttons end>
@@ -15,7 +18,7 @@
 </ion-header>
 <ion-content>
   <ion-list>
-    <form [formGroup]="plantForm" (ngSubmit)="addPlant(plantForm.value)">
+    <form [formGroup]="plantForm" (ngSubmit)="savePlant(plantForm.value)">
       <ion-item>
         <ion-label color="primary" floating>Name</ion-label>
         <ion-input required [formControl]="plantForm.controls['name']" name="name"></ion-input>
@@ -46,7 +49,7 @@
       <ion-buttons>
         <button ion-button large block icon-left type="submit" [color]="plantForm.valid ? 'primary' : 'danger'" [disabled]="!plantForm.valid">
           <ion-icon name="checkmark"></ion-icon>
-          Add Plant
+          Save Plant
         </button>
       </ion-buttons>
     </form>

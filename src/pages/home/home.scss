@@ -27,6 +27,7 @@ page-home {
         height: 100%;
         width: 100%;
         background: white;
+        pointer-events: none;
     }
     .plant-title {
         padding-left: 2%;
@@ -47,5 +48,13 @@ page-home {
 .plant-card.backside {
     .card {
         transform: rotateY( 180deg );
+    }
+
+    .front {
+        pointer-events: none;
+    }
+
+    .back {
+        pointer-events: inherit;
     }
 }
