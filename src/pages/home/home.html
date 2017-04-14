@@ -1,18 +1,47 @@
 
 <ion-content class="bg-color-light" padding scrollY="true">
-  <ion-card class="plant-card" *ngFor="let plant of plants; let i = index;">
-    <img src={{plant.image}} />
-    <ion-item>
-      <h2 class="plant-title">{{plant.name}}</h2>
-      <p class="plant-place low-opacity">{{plant.place}}</p>
-    </ion-item>
+  <ion-card #plantCard class="plant-card" *ngFor="let plant of plants; let i = index;">
+    <div class="card">
+      <div class="front" (click)="cardPress($event, plant, plantCard)">
+        <img src={{plant.image}} />
+        <ion-item>
+          <h2 class="plant-title">{{plant.name}}</h2>
+          <p class="plant-place low-opacity">{{plant.place}}</p>
+        </ion-item>
 
-    <ion-buttons>
-      <button ion-button block icon-left>
-        <ion-icon name="water"></ion-icon>
-        Water
-      </button>
-    </ion-buttons>
+        <ion-buttons padding>
+          <button ion-button block round icon-left (click)="waterButtonClicked($event, plant)">
+            <ion-icon name="water"></ion-icon>
+            Water
+          </button>
+        </ion-buttons>
+      </div>
+      <div class="back">
+        <ion-item>
+          <h2 class="plant-title">{{plant.name}}</h2>
+          <p class="plant-place low-opacity">Adjust plant</p>
+          <ion-icon item-right name="close-circle" (click)="flipCard(plantCard, false)"></ion-icon>
+        </ion-item>
+        
+        <ion-item>
+          <ion-icon name="create" item-left large></ion-icon>
+          <h2>Edit plant details</h2>
+          <p>Name, Place, Picture, ...</p>
+        </ion-item>
+        
+        <ion-item>
+          <ion-icon name="water" item-left large></ion-icon>
+          <h2>Set water level</h2>
+          <p>Adjust manually</p>
+        </ion-item>
+        
+        <ion-item (click)="deleteButton($event, plant)">
+          <ion-icon name="trash" item-left large></ion-icon>
+          <h2>Delete plant</h2>
+          <p>And it's gone forever :(</p>
+        </ion-item>
+      </div>
+    </div>
   </ion-card>
 
   <ion-card *ngIf="!plantsService.plantsLoaded && !plantsService.emptyState">

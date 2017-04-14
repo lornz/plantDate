@@ -1,0 +1,12 @@
+release:
+
+cordova build --release android
+
+[
+einmalig:
+keytool -genkey -v -keystore my-release-key.keystore -alias alias_name -keyalg RSA -keysize 2048 -validity 10000
+]
+
+jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore C:\Users\Lorenz\Documents\GitHub\plantDate\plantDate\my-keystore-file.keystore platforms/android/build/outputs/apk/android-release-unsigned.apk EMAIL/PACKAGE_NAME/UNIQUE_ID
+
+-> standard pass

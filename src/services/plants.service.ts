@@ -15,6 +15,17 @@ export class PlantsService {
         this.plants.splice(0, 0, plant);
     }
 
+    public deletePlant(plantToDelete:Plant):void {
+      console.log('deletePlant', plantToDelete);
+      this.plants.forEach((plant:Plant, index:number) => {
+        if (plant.id === plantToDelete.id) {
+          this.plants.splice(index, 1);
+          this.savePlants();
+          return;
+        }
+      });
+    }
+
     // ID für neue Pflanze generieren
     public getNewId():number {
         return this.plants.length + 1;

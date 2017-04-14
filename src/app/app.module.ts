@@ -16,6 +16,7 @@ import { HomePage } from '../pages/home/home';
 import { AddPage } from '../pages/add/add';
 
 // Services
+import { AppService } from '../services/app.service';
 import { PlantsService } from '../services/plants.service';
 
 @NgModule({
@@ -40,6 +41,7 @@ import { PlantsService } from '../services/plants.service';
   providers: [
     StatusBar,
     SplashScreen,
+    AppService,
     PlantsService,
     Camera,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
