@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { AddPage } from '../add/add';
-import { PlantsService, Plant } from '../../services/plants.service';
+import { PlantsService, Plant, LoadingState } from '../../services/plants.service';
 
 @Component({
   selector: 'page-home',
@@ -19,6 +19,10 @@ export class HomePage {
 
   public get plants():Array<Plant> {
     return this.plantsService.plants;
+  }
+
+  public get plantsLoaded():boolean {
+    return this.plantsService.loadingState === LoadingState.loaded;
   }
   
 }

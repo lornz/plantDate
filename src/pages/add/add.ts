@@ -17,8 +17,7 @@ export class AddPage {
     this.plantForm = formBuilder.group({
       'name': [null, Validators.compose([Validators.required, Validators.minLength(2), , Validators.maxLength(25)])],
       'place': null,
-      'comment': null,
-      'image': null
+      'comment': null
     })
   }
 
@@ -31,6 +30,7 @@ export class AddPage {
       plant_.image = this.base64Image;
     }
     this.plantsService.addPlant(plant_);
+    this.plantsService.savePlants();
 
     this.navCtrl.pop()
   }

@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 
+import { Storage } from '@ionic/storage';
+
 @Injectable()
 export class PlantsService {
     public plants:Array<Plant> = [];
+    public loadingState:LoadingState = LoadingState.unknown;
 
-    constructor() {
-        console.log('plants service')
-
-        this.initPlants();
+    constructor(private storage:Storage) {
+        this.loadPlants();
     }
 
     public addPlant(plant:Plant):void {
@@ -19,12 +20,67 @@ export class PlantsService {
         return this.plants.length + 1;
     }
 
-    // fake plants
-    private initPlants():void {
-    for (let i:number = 0; i < 6; i++) {
-      this.plants[i] = new Plant(i, 'PlantName -' + i, 'http://lorempixel.com/400/200/nature/' + i);
+    public savePlants():void {
+      this.storage.ready().then(() => {
+        console.log('savePlants');
+
+        let plantsJSON:string = JSON.stringify(this.plants);
+        console.log('savePlants -> plantsJSON', plantsJSON);
+
+        this.storage.set('plants', plantsJSON);
+      });
     }
-  }
+
+    public loadPlants():void {
+      this.storage.ready().then(() => {
+        this.loadingState = LoadingState.init;
+        this.storage.get('plants').then((val) => {
+          this.loadingState = LoadingState.loading;
+            let plantsJSON:Array<Plant>;
+
+            // JSON PARSING
+            try {
+              plantsJSON = JSON.parse(val);
+            }
+            catch (e) {
+              console.warn('ERROR LOADING PLANTS');
+              this.loadingState = LoadingState.failed;
+              return;
+            }
+
+            // Object geladen
+            let typeOfPlants = typeof plantsJSON;
+            if (typeOfPlants !== 'object') {
+              console.warn('ERROR LOADING PLANTS');
+              this.loadingState = LoadingState.failed;
+              return;
+            }
+
+            // Beinhaltet Plant Objects
+            plantsJSON.forEach((plant:any) => {
+              let typeOfPlant = typeof plant;
+              if (typeOfPlant !== 'object') {
+                console.warn('ERROR LOADING PLANTS');
+                this.loadingState = LoadingState.failed;
+                return;
+              }
+            });
+
+
+            // Wenn bisher nicht abgebrochen wurde, erfolgreiches laden
+            if (plantsJSON) {
+              this.plants = plantsJSON;
+              this.loadingState = LoadingState.loaded;
+            }
+          }).catch((e) => {
+            console.warn('ERROR LOADING PLANTS');
+            this.loadingState = LoadingState.failed;
+          });
+      }).catch((e) => {
+        console.warn('ERROR LOADING PLANTS');
+        this.loadingState = LoadingState.failed;
+      });
+    }
 }
 
 export class Plant {
@@ -41,4 +97,12 @@ export class Plant {
     this.place = place_;
     this.comment = comment_;
   }
+}
+
+export enum LoadingState {
+  unknown,
+  init,
+  loading,
+  failed,
+  loaded,
 }
