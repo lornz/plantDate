@@ -1,14 +1,18 @@
 
 <ion-content class="bg-color-light" padding scrollY="true">
-  <ion-card *ngFor="let plant of plants; let i = index;">
+  <ion-card class="plant-card" *ngFor="let plant of plants; let i = index;">
     <img src={{plant.image}} />
-    <ion-card-header>
-    {{plant.name}}
-    </ion-card-header>
+    <ion-item>
+      <h2 class="plant-title">{{plant.name}}</h2>
+      <p class="plant-place low-opacity">{{plant.place}}</p>
+    </ion-item>
 
-    <ion-card-content>
-      Card ion-content
-    </ion-card-content>
+    <ion-buttons>
+      <button ion-button block icon-left>
+        <ion-icon name="water"></ion-icon>
+        Water
+      </button>
+    </ion-buttons>
   </ion-card>
 
   <ion-card *ngIf="!plantsService.plantsLoaded && !plantsService.emptyState">
@@ -36,7 +40,7 @@
   </ion-card>
 
   <ion-fab right bottom>
-    <button ion-fab color="primary" (tap)="goToAddPage()"><ion-icon name="add"></ion-icon></button>
+    <button ion-fab color="danger" (tap)="goToAddPage()"><ion-icon name="add"></ion-icon></button>
   </ion-fab>
 </ion-content>
 

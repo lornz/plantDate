@@ -4,3 +4,20 @@ page-home {
 .bg-color-light {
     background-color: #f4f4f4; // TODO: variables.scss nutzen
 }
+
+.plant-card {
+    .plant-title {
+        padding-left: 2%;
+        padding-top: 2%;
+        font-size: 150%;
+    }
+
+    .plant-place {
+        padding-left: 2%;
+        margin-top: -1%;
+    }
+}
+
+.low-opacity {
+    opacity: .5;
+}
