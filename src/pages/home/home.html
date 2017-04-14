@@ -1,0 +1,19 @@
+
+<ion-content padding scrollY="true">
+  <ion-card *ngFor="let plant of plants; let i = index; ">
+    <img src={{plant.image}} />
+    <ion-card-header>
+    {{plant.name}}
+    </ion-card-header>
+
+    <ion-card-content>
+      Card ion-content
+    </ion-card-content>
+  </ion-card>
+
+  <ion-fab right bottom>
+    <button ion-fab color="primary" (tap)="goToAddPage()"><ion-icon name="add"></ion-icon></button>
+  </ion-fab>
+</ion-content>
+
+

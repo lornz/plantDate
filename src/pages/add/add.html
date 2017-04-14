@@ -1,0 +1,47 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>
+      Add new plant
+    </ion-title>
+
+    <ion-buttons end>
+      <button ion-button icon-only>
+        <ion-icon name="more"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+<ion-content>
+  <ion-list>
+    <form [formGroup]="plantForm" (ngSubmit)="addPlant(plantForm.value)">
+      <ion-item>
+        <ion-label color="primary" floating>Name</ion-label>
+        <ion-input required [formControl]="plantForm.controls['name']" name="name"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label color="primary" floating>Place</ion-label>
+        <ion-input [formControl]="plantForm.controls['place']" name="place"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label color="primary" floating>Comment</ion-label>
+        <ion-input [formControl]="plantForm.controls['comment']" name="comment"></ion-input>
+      </ion-item>
+
+      <ion-buttons>
+        <button ion-button large block icon-left type="submit" [color]="plantForm.valid ? 'primary' : 'danger'" [disabled]="!plantForm.valid">
+          <ion-icon name="checkmark"></ion-icon>
+          Add Plant
+        </button>
+      </ion-buttons>
+    </form>
+
+  </ion-list>
+
+</ion-content>
+
+
+
