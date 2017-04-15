@@ -28,11 +28,11 @@ export class AddPage {
   public savePlant(plantData:Plant):void {
     console.log('savePlant', plantData, 'plantForEditing', this.plantForEditing);
     plantData.id = this.plantForEditing ? this.plantForEditing.id : this.plantsService.getNewId();
-    // plantData.waterLevel = this.plantForEditing ? this.plantForEditing.waterLevel : this.plantsService.startWaterLevel;
-    plantData.image = 'http://lorempixel.com/400/200/nature/' + plantData.id;
-    if (this.base64Image) {
-      plantData.image = this.base64Image;
-    }
+    plantData.image = this.plantImage;
+    // plantData.image = 'http://lorempixel.com/400/200/nature/' + plantData.id;
+    // if (this.base64Image) {
+    //   plantData.image = this.base64Image;
+    // }
     let plant_:Plant = new Plant (
       plantData.id,
       plantData.name,
@@ -80,5 +80,17 @@ export class AddPage {
 
   public get plantForEditing():Plant {
     return this.plantsService.plantForEditing;
+  }
+
+  private get plantImage():string {
+    if (this.base64Image) {
+      return this.base64Image;
+    }
+    else if (this.plantForEditing && this.plantForEditing.image) {
+      return this.plantForEditing.image;
+    }
+    else {
+      'http://lorempixel.com/400/200/nature/' + 10;
+    }
   }
 }
