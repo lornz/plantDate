@@ -2,7 +2,8 @@ import { Component, Renderer } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
 import { AddPage } from '../add/add';
-import { PlantsService, Plant } from '../../services/plants.service';
+import { PlantsService } from '../../services/plants.service';
+import { Plant } from '../../services/plant';
 import { AppService } from '../../services/app.service';
 
 @Component({

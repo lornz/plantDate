@@ -3,7 +3,8 @@ import { Camera } from '@ionic-native/camera';
 import { Validators, FormGroup, FormBuilder }   from '@angular/forms';
 import { NavController } from 'ionic-angular';
 import { AppService } from '../../services/app.service';
-import { PlantsService, Plant } from '../../services/plants.service';
+import { PlantsService } from '../../services/plants.service';
+import { Plant } from '../../services/plant';
 
 @Component({
   selector: 'page-add',
@@ -27,6 +28,7 @@ export class AddPage {
   public savePlant(plantData:Plant):void {
     console.log('savePlant', plantData, 'plantForEditing', this.plantForEditing);
     plantData.id = this.plantForEditing ? this.plantForEditing.id : this.plantsService.getNewId();
+    plantData.waterLevel = this.plantForEditing ? this.plantForEditing.waterLevel : this.plantsService.startWaterLevel;
     plantData.image = 'http://lorempixel.com/400/200/nature/' + plantData.id;
     if (this.base64Image) {
       plantData.image = this.base64Image;
