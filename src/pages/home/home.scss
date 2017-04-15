@@ -1,2 +1,70 @@
 page-home {
+    overflow-y: scroll; 
+}
+
+.bg-color-light {
+    background-color: #f4f4f4; // TODO: variables.scss nutzen
+}
+
+.plant-card {
+    perspective: 800px;
+
+    .card {
+        transform-style: preserve-3d;
+        transition-duration: .6s;
+        transition-property: transform;
+        transition-timing-function: ease-out;
+    }
+
+    .front, .back {
+        backface-visibility: hidden;
+    }
+
+    .back {
+        transform: rotateY( 180deg );
+        top: 0;
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        background: white;
+        pointer-events: none;
+    }
+    .plant-title {
+        padding-left: 2%;
+        padding-top: 2%;
+        font-size: 150%;
+    }
+
+    .plant-place {
+        padding-left: 2%;
+        margin-top: -1%;
+    }
+}
+
+.low-opacity {
+    opacity: .5;
+}
+
+.plant-card.backside {
+    .card {
+        transform: rotateY( 180deg );
+    }
+
+    .front {
+        pointer-events: none;
+    }
+
+    .back {
+        pointer-events: inherit;
+    }
+}
+
+.water-level {
+    height: 5px;
+    width: 100%;
+    background-color: #488aff;
+    transform-origin: left;
+    transition-duration: 2s;
+    transition-property: transform;
+    transition-timing-function: ease-out;
 }
