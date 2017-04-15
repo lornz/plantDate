@@ -44,8 +44,7 @@ export class HomePage {
     console.log('waterButtonClicked', event, plant);
     event.stopPropagation();
     event.preventDefault();
-    plant.waterLevel = 1;
-
+    plant.waterThisPlant();
     this.plantsService.savePlants();
   }
 
