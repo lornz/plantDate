@@ -58,3 +58,13 @@ page-home {
         pointer-events: inherit;
     }
 }
+
+.water-level {
+    height: 5px;
+    width: 100%;
+    background-color: #488aff;
+    transform-origin: left;
+    transition-duration: 2s;
+    transition-property: transform;
+    transition-timing-function: ease-out;
+}

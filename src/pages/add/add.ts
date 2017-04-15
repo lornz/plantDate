@@ -24,14 +24,22 @@ export class AddPage {
     })
   }
 
-  public savePlant(plant_:Plant):void {
-    console.log('savePlant', plant_);
-    plant_.id = this.plantForEditing ? this.plantForEditing.id : this.plantsService.getNewId();
-
-    plant_.image = 'http://lorempixel.com/400/200/nature/' + plant_.id;
+  public savePlant(plantData:Plant):void {
+    console.log('savePlant', plantData, 'plantForEditing', this.plantForEditing);
+    plantData.id = this.plantForEditing ? this.plantForEditing.id : this.plantsService.getNewId();
+    plantData.image = 'http://lorempixel.com/400/200/nature/' + plantData.id;
     if (this.base64Image) {
-      plant_.image = this.base64Image;
+      plantData.image = this.base64Image;
     }
+    let plant_:Plant = new Plant (
+      plantData.id,
+      plantData.name,
+      plantData.image,
+      plantData.place,
+      plantData.comment,
+      plantData.waterLevel
+    )
+    
 
     if (this.plantForEditing) {
       this.plantsService.replacePlant(this.plantForEditing, plant_);

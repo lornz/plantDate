@@ -41,7 +41,13 @@ export class PlantsService {
 
     // ID für neue Pflanze generieren
     public getNewId():number {
-        return this.plants.length + 1;
+      if (this.plants && this.plants.length > 0) {
+        return this.plants[0].id + 1; // Da neue Pflanzen immer VORNE angefügt werden
+      }
+      else {
+        return 1;
+      }
+      // return this.plants.length + 1;
     }
 
     public savePlants():void {
@@ -124,13 +130,17 @@ export class Plant {
   public image:string;
   public place:string;
   public comment:string;
+  public waterLevel:number; // 0 - 1
 
-  constructor(id_:number, name_:string, image_:string, place_?:string, comment_?:string) {
+  constructor(id_:number, name_:string, image_:string, place_?:string, comment_?:string, waterLevel_:number = .1) {
     this.id = id_;
     this.name = name_;
     this.image = image_;
     this.place = place_;
     this.comment = comment_;
+    this.waterLevel = waterLevel_;
+
+    console.log('constructor new Plant', this);
   }
 }
 

@@ -43,6 +43,9 @@ export class HomePage {
     console.log('waterButtonClicked', event, plant);
     event.stopPropagation();
     event.preventDefault();
+    plant.waterLevel = 1;
+
+    this.plantsService.savePlants();
   }
 
   private showConfirm(plant:Plant) {
@@ -71,6 +74,11 @@ export class HomePage {
       return;
     }
     this.showConfirm(plant);
+  }
+
+  public getWaterLevelStyle(plant:Plant):string {
+    let scaleX:string = 'scaleX(' + plant.waterLevel + ')';
+    return scaleX;
   }
 
   public get plants():Array<Plant> {
