@@ -21,25 +21,25 @@ export class AddPage {
     this.plantForm = formBuilder.group({
       'name': [this.plantForEditing ? this.plantForEditing.name : null, Validators.compose([Validators.required, Validators.minLength(2), , Validators.maxLength(25)])],
       'place': this.plantForEditing ? this.plantForEditing.place : null,
-      'comment': this.plantForEditing ? this.plantForEditing.comment : null
+      'comment': this.plantForEditing ? this.plantForEditing.comment : null,
+      'waterDays': this.plantForEditing ? this.plantForEditing.waterDays : 5
     })
   }
 
   public savePlant(plantData:Plant):void {
     console.log('savePlant', plantData, 'plantForEditing', this.plantForEditing);
     plantData.id = this.plantForEditing ? this.plantForEditing.id : this.plantsService.getNewId();
-    plantData.waterLevel = this.plantForEditing ? this.plantForEditing.waterLevel : this.plantsService.startWaterLevel;
-    plantData.image = 'http://lorempixel.com/400/200/nature/' + plantData.id;
-    if (this.base64Image) {
-      plantData.image = this.base64Image;
-    }
+    plantData.image = this.plantImage;
+    plantData.lastWatered = this.plantForEditing ? this.plantForEditing.lastWatered : null;
+
     let plant_:Plant = new Plant (
       plantData.id,
       plantData.name,
       plantData.image,
       plantData.place,
       plantData.comment,
-      plantData.waterLevel
+      plantData.lastWatered,
+      plantData.waterDays
     )
     
 
@@ -81,5 +81,17 @@ export class AddPage {
 
   public get plantForEditing():Plant {
     return this.plantsService.plantForEditing;
+  }
+
+  public get plantImage():string {
+    if (this.base64Image) {
+      return this.base64Image;
+    }
+    else if (this.plantForEditing && this.plantForEditing.image) {
+      return this.plantForEditing.image;
+    }
+    else {
+      'http://lorempixel.com/400/200/nature/' + 10;
+    }
   }
 }

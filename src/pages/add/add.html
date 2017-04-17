@@ -34,16 +34,22 @@
         <ion-label color="primary" floating>Comment</ion-label>
         <ion-input [formControl]="plantForm.controls['comment']" name="comment"></ion-input>
       </ion-item>
-
+  
+      <ion-item>
+        <ion-range min="1" max="30" step="1" color="primary" [formControl]="plantForm.controls['waterDays']">
+          <ion-icon range-left name="water" color="primary"></ion-icon>
+          <ion-label range-left>Every <b>{{plantForm.value.waterDays}}</b> Days</ion-label>
+        </ion-range>
+      </ion-item>
+      
       <ion-buttons>
         <button ion-button large block icon-left (click)="takePicture($event)">
           <ion-icon name="camera"></ion-icon>
           Take picture
         </button>
       </ion-buttons>
-
       <div class="picture-preview">
-        <img *ngIf="this.base64Image" src="{{this.base64Image}}">
+        <img *ngIf="plantImage" src="{{plantImage}}">
       </div>
 
       <ion-buttons>

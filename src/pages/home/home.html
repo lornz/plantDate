@@ -10,7 +10,7 @@
         </ion-item>
 
         <ion-buttons padding>
-          <button ion-button block round icon-left (click)="waterButtonClicked($event, plant)">
+          <button ion-button block round icon-left (click)="waterButtonClicked($event, plant)" [color]="plant.needsToBeWatered ? 'danger' : 'primary'">
             <ion-icon name="water"></ion-icon>
             Water
           </button>

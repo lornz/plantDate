@@ -8,8 +8,6 @@ export class PlantsService {
     public plantForEditing:Plant;
     public loadingState:LoadingState = LoadingState.unknown;
 
-    public startWaterLevel:number = .2;
-
     constructor(private storage:Storage) {
         this.loadPlants();
     }
@@ -47,9 +45,8 @@ export class PlantsService {
         return this.plants[0].id + 1; // Da neue Pflanzen immer VORNE angefügt werden
       }
       else {
-        return 1;
+        return 0;
       }
-      // return this.plants.length + 1;
     }
 
     public savePlants():void {
@@ -103,7 +100,10 @@ export class PlantsService {
 
             // Wenn bisher nicht abgebrochen wurde, erfolgreiches laden
             if (plantsJSON) {
-              this.plants = plantsJSON;
+              plantsJSON.forEach((plant:Plant) => {
+                let createdPlant:Plant = new Plant(plant.id, plant.name, plant.image, plant.place, plant.comment, plant.lastWatered, plant.waterDays);
+                this.plants.push(createdPlant);
+              });
               this.loadingState = LoadingState.loaded;
             }
           }).catch((e) => {
