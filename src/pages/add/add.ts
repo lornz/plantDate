@@ -31,10 +31,7 @@ export class AddPage {
     plantData.id = this.plantForEditing ? this.plantForEditing.id : this.plantsService.getNewId();
     plantData.image = this.plantImage;
     plantData.lastWatered = this.plantForEditing ? this.plantForEditing.lastWatered : null;
-    // plantData.image = 'http://lorempixel.com/400/200/nature/' + plantData.id;
-    // if (this.base64Image) {
-    //   plantData.image = this.base64Image;
-    // }
+
     let plant_:Plant = new Plant (
       plantData.id,
       plantData.name,
@@ -86,7 +83,7 @@ export class AddPage {
     return this.plantsService.plantForEditing;
   }
 
-  private get plantImage():string {
+  public get plantImage():string {
     if (this.base64Image) {
       return this.base64Image;
     }

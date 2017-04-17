@@ -19,17 +19,6 @@
 <ion-content>
   <ion-list>
     <form [formGroup]="plantForm" (ngSubmit)="savePlant(plantForm.value)">
-      <ion-buttons>
-        <button ion-button large block icon-left (click)="takePicture($event)">
-          <ion-icon name="camera"></ion-icon>
-          Take picture
-        </button>
-      </ion-buttons>
-
-      <div class="picture-preview">
-        <img *ngIf="this.base64Image" src="{{this.base64Image}}">
-      </div>
-
       <ion-item>
         <ion-label color="primary" floating>Name</ion-label>
         <ion-input required [formControl]="plantForm.controls['name']" name="name"></ion-input>
@@ -47,13 +36,21 @@
       </ion-item>
   
       <ion-item>
-        
         <ion-range min="1" max="30" step="1" color="primary" [formControl]="plantForm.controls['waterDays']">
-          <ion-icon small range-left name="water"></ion-icon>
-          <ion-label range-left>Every {{plantForm.value.waterDays}} Days</ion-label>
+          <ion-icon range-left name="water" color="primary"></ion-icon>
+          <ion-label range-left>Every <b>{{plantForm.value.waterDays}}</b> Days</ion-label>
         </ion-range>
       </ion-item>
       
+      <ion-buttons>
+        <button ion-button large block icon-left (click)="takePicture($event)">
+          <ion-icon name="camera"></ion-icon>
+          Take picture
+        </button>
+      </ion-buttons>
+      <div class="picture-preview">
+        <img *ngIf="plantImage" src="{{plantImage}}">
+      </div>
 
       <ion-buttons>
         <button ion-button large block icon-left type="submit" [color]="plantForm.valid ? 'primary' : 'danger'" [disabled]="!plantForm.valid">

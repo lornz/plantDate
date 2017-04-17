@@ -45,7 +45,7 @@ export class PlantsService {
         return this.plants[0].id + 1; // Da neue Pflanzen immer VORNE angefügt werden
       }
       else {
-        return 1;
+        return 0;
       }
     }
 
