@@ -28,9 +28,9 @@ export class AddPage {
 
   public savePlant(plantData:Plant):void {
     console.log('savePlant', plantData, 'plantForEditing', this.plantForEditing);
-    plantData.id = this.plantForEditing ? this.plantForEditing.id : this.plantsService.getNewId();
+    plantData.id = this.appService.plantDetailMode === 'edit' ? this.plantForEditing.id : this.plantsService.getNewId();
     plantData.image = this.plantImage;
-    plantData.lastWatered = this.plantForEditing ? this.plantForEditing.lastWatered : null;
+    plantData.lastWatered = this.appService.plantDetailMode === 'edit' ? this.plantForEditing.lastWatered : null;
 
     let plant_:Plant = new Plant (
       plantData.id,
@@ -87,11 +87,11 @@ export class AddPage {
     if (this.base64Image) {
       return this.base64Image;
     }
-    else if (this.plantForEditing && this.plantForEditing.image) {
+    else if (this.appService.plantDetailMode === 'edit' && this.plantForEditing && this.plantForEditing.image) {
       return this.plantForEditing.image;
     }
     else {
-      'http://lorempixel.com/400/200/nature/' + 10;
+      return null;
     }
   }
 }

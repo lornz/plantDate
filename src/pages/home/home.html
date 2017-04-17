@@ -3,7 +3,8 @@
   <ion-card #plantCard class="plant-card" *ngFor="let plant of plants; let i = index;">
     <div class="card">
       <div class="front" (click)="cardPress($event, plant, plantCard)">
-        <img src={{plant.image}} />
+        <img *ngIf="plant.image" src={{plant.image}} />
+        <img *ngIf="!plant.image" src='assets/empty-state-new.jpg' />
         <ion-item>
           <h2 class="plant-title">{{plant.name}}</h2>
           <p class="plant-place low-opacity">{{plant.place}}</p>
@@ -33,8 +34,8 @@
         
         <ion-item>
           <ion-icon name="water" item-left large></ion-icon>
-          <h2>Set water level</h2>
-          <p>Adjust manually</p>
+          <h2>Watered last</h2>
+          <p>{{plant.lastWateredReadable}}</p>
         </ion-item>
         
         <ion-item (click)="deleteButton($event, plant)">

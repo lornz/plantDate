@@ -10,7 +10,8 @@ export class Plant implements OnDestroy{
   public lastWatered:moment.Moment;
   public waterDays:number; // Tage bis zum nächsten Gießen (initial)
   public nextWaterMoment:moment.Moment;
-  
+
+  private timeUnit:moment.unitOfTime.DurationConstructor = 'minutes'; // debug: 'minutes', release: 'days'
   private updateWaterLevelTimer:number;
   private _waterLevel:number;
 
@@ -33,20 +34,17 @@ export class Plant implements OnDestroy{
       waterDays_ = 7; // Standard Duration
     }
     this.waterDays = waterDays_;
-    this.nextWaterMoment = moment(this.lastWatered).add(this.waterDays + 1, 'minutes'); // TODO: days statt minutes
+    this.nextWaterMoment = moment(this.lastWatered).add(this.waterDays + 1, this.timeUnit); // TODO: days statt minutes
 
     console.log('constructor new Plant', this);
 
+    this.stopWaterTimer();
     this.recalcWaterLevel();
-    this.updateWaterLevelTimer = setInterval(() => {
-      this.recalcWaterLevel();
-    }, 10000)
+    this.startWaterTimer();
   }
 
   ngOnDestroy():void {
-    if (this.updateWaterLevelTimer) {
-      clearInterval(this.updateWaterLevelTimer);
-    }
+    this.stopWaterTimer();
     console.log('destroyed Plant', this);
   }
 
@@ -56,9 +54,12 @@ export class Plant implements OnDestroy{
 
   public waterThisPlant():void {
     this.lastWatered = moment();
-    this.nextWaterMoment = moment(this.lastWatered).add(this.waterDays + 1, 'minutes');
-    console.log('waterThisPlant', this.name, 'lastWatered', this.lastWatered, 'nextWaterMoment', this.nextWaterMoment);
+    this.nextWaterMoment = moment(this.lastWatered).add(this.waterDays + 1, this.timeUnit);
+    // console.log('waterThisPlant', this.name, 'lastWatered', this.lastWatered, 'nextWaterMoment', this.nextWaterMoment);
+    
+    this.stopWaterTimer();
     this.recalcWaterLevel();
+    this.startWaterTimer();
   }
 
   public get waterLevel():number {
@@ -73,10 +74,40 @@ export class Plant implements OnDestroy{
     return this.waterLevel <= 0;
   }
 
+  public get lastWateredReadable():string {
+    let rightNow:moment.Moment = moment();
+    let diff:number = moment(rightNow).diff(this.lastWatered, this.timeUnit);
+    if (diff === 0) {
+      return 'Today'
+    }
+    else if (diff === 1) {
+      return 'Yesterday'
+    }
+    else {
+      return moment(this.lastWatered).format('DD-MM-YYYY, h:mm a');
+    }
+  }
+
+  private stopWaterTimer():void {
+    if (this.updateWaterLevelTimer) {
+      clearInterval(this.updateWaterLevelTimer);
+      this.updateWaterLevelTimer = null;
+    }
+  }
+
+  private startWaterTimer():void {
+    this.updateWaterLevelTimer = setInterval(() => {
+      this.recalcWaterLevel();
+    }, 10000)
+  }
+
   private recalcWaterLevel():void {
-    let waterLevel:number = -1 * ((moment().diff(this.nextWaterMoment, 'minutes')) / this.waterDays);
-    // console.log('recalc waterLevel for', this.name, waterLevel);
+    let waterLevel:number = -1 * ((moment().diff(this.nextWaterMoment, this.timeUnit)) / this.waterDays);
     this.waterLevel = waterLevel;
+
+    if (waterLevel <= 0) {
+      this.stopWaterTimer();
+    }
   }
 
 }
