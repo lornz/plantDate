@@ -21,7 +21,8 @@ export class AddPage {
     this.plantForm = formBuilder.group({
       'name': [this.plantForEditing ? this.plantForEditing.name : null, Validators.compose([Validators.required, Validators.minLength(2), , Validators.maxLength(25)])],
       'place': this.plantForEditing ? this.plantForEditing.place : null,
-      'comment': this.plantForEditing ? this.plantForEditing.comment : null
+      'comment': this.plantForEditing ? this.plantForEditing.comment : null,
+      'waterDays': this.plantForEditing ? this.plantForEditing.waterDays : 5
     })
   }
 
@@ -29,6 +30,7 @@ export class AddPage {
     console.log('savePlant', plantData, 'plantForEditing', this.plantForEditing);
     plantData.id = this.plantForEditing ? this.plantForEditing.id : this.plantsService.getNewId();
     plantData.image = this.plantImage;
+    plantData.lastWatered = this.plantForEditing ? this.plantForEditing.lastWatered : null;
     // plantData.image = 'http://lorempixel.com/400/200/nature/' + plantData.id;
     // if (this.base64Image) {
     //   plantData.image = this.base64Image;
@@ -38,7 +40,9 @@ export class AddPage {
       plantData.name,
       plantData.image,
       plantData.place,
-      plantData.comment
+      plantData.comment,
+      plantData.lastWatered,
+      plantData.waterDays
     )
     
 

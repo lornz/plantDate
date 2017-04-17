@@ -8,8 +8,6 @@ export class PlantsService {
     public plantForEditing:Plant;
     public loadingState:LoadingState = LoadingState.unknown;
 
-    public startWaterLevel:number = .2;
-
     constructor(private storage:Storage) {
         this.loadPlants();
     }
