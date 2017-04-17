@@ -75,6 +75,10 @@ export class AddPage {
     });
   }
 
+  public closeAddScreen():void {
+    this.navCtrl.pop();
+  }
+
   public get isInAddMode():boolean {
     return this.appService.plantDetailMode === 'add';
   }

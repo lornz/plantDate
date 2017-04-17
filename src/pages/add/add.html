@@ -1,5 +1,4 @@
 <ion-header>
-
   <ion-navbar>
     <ion-title *ngIf="isInAddMode">
       Add new plant
@@ -14,16 +13,15 @@
       </button>
     </ion-buttons>
   </ion-navbar>
-
 </ion-header>
-<ion-content>
+
+<ion-content ion-scroll scrollY="true">
   <ion-list>
     <form [formGroup]="plantForm" (ngSubmit)="savePlant(plantForm.value)">
       <ion-item>
         <ion-label color="primary" floating>Name</ion-label>
         <ion-input required [formControl]="plantForm.controls['name']" name="name"></ion-input>
       </ion-item>
-
 
       <ion-item>
         <ion-label color="primary" floating>Room</ion-label>
@@ -37,13 +35,13 @@
   
       <ion-item>
         <ion-range min="1" max="30" step="1" color="primary" [formControl]="plantForm.controls['waterDays']">
-          <ion-icon range-left name="water" color="primary"></ion-icon>
+          <ion-icon range-left large name="water" color="primary"></ion-icon>
           <ion-label range-left>Every <b>{{plantForm.value.waterDays}}</b> Days</ion-label>
         </ion-range>
       </ion-item>
       
-      <ion-buttons>
-        <button ion-button large block icon-left (click)="takePicture($event)">
+      <ion-buttons class="center-text" padding>
+        <button ion-button outline large round icon-left (click)="takePicture($event)">
           <ion-icon name="camera"></ion-icon>
           Take picture
         </button>
@@ -51,18 +49,18 @@
       <div class="picture-preview">
         <img *ngIf="plantImage" src="{{plantImage}}">
       </div>
-
-      <ion-buttons>
-        <button ion-button large block icon-left type="submit" [color]="plantForm.valid ? 'primary' : 'danger'" [disabled]="!plantForm.valid">
-          <ion-icon name="checkmark"></ion-icon>
-          Save Plant
-        </button>
-      </ion-buttons>
     </form>
-
   </ion-list>
-
 </ion-content>
+
+<ion-footer>
+  <ion-buttons>
+    <button ion-button full large icon-left type="submit" [color]="plantForm.valid ? 'secondary' : 'danger'" [disabled]="!plantForm.valid" (click)="savePlant(plantForm.value)">
+      <ion-icon name="checkmark"></ion-icon>
+      Save Plant
+    </button>
+  </ion-buttons>
+</ion-footer>
 
 
 
