@@ -9,6 +9,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { Camera } from '@ionic-native/camera';
 import { IonicStorageModule } from '@ionic/storage';
+import { LocalNotifications } from '@ionic-native/local-notifications';
 
 // plantDate
 import { MyApp } from './app.component';
@@ -17,6 +18,7 @@ import { AddPage } from '../pages/add/add';
 
 // Services
 import { AppService } from '../services/app.service';
+import { PlantNotificationService } from '../services/plant-notification.service';
 import { PlantsService } from '../services/plants.service';
 
 @NgModule({
@@ -41,7 +43,9 @@ import { PlantsService } from '../services/plants.service';
   providers: [
     StatusBar,
     SplashScreen,
+    LocalNotifications,
     AppService,
+    PlantNotificationService,
     PlantsService,
     Camera,
     {provide: ErrorHandler, useClass: IonicErrorHandler}

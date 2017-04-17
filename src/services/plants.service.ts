@@ -1,15 +1,22 @@
 import { Injectable } from '@angular/core';
-import { Plant } from './plant'
 import { Storage } from '@ionic/storage';
+import { Plant } from './plant'
+import { PlantNotificationService } from './plant-notification.service'
+
 
 @Injectable()
 export class PlantsService {
     public plants:Array<Plant> = [];
     public plantForEditing:Plant;
     public loadingState:LoadingState = LoadingState.unknown;
+    public plantNotificationService:PlantNotificationService;
 
     constructor(private storage:Storage) {
+
+      setTimeout(() => {
         this.loadPlants();
+
+      }, 50);
     }
 
     public addPlant(plant:Plant):void {
@@ -53,7 +60,7 @@ export class PlantsService {
       this.storage.ready().then(() => {
         let plantsJSON:string = JSON.stringify(this.plants);
         this.storage.set('plants', plantsJSON);
-
+        this.plantNotificationService.updateNotifications(); 
         if (!this.plantsLoaded) {
           this.loadPlants();
         }
@@ -105,6 +112,8 @@ export class PlantsService {
                 this.plants.push(createdPlant);
               });
               this.loadingState = LoadingState.loaded;
+
+              this.plantNotificationService.updateNotifications(); // TODO: loading als Promise ? Oder Loading State als Observable
             }
           }).catch((e) => {
             // Das ist ok!

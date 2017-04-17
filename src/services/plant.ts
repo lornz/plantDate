@@ -1,6 +1,7 @@
+import { OnDestroy} from '@angular/core';
 import * as moment from 'moment';
 
-export class Plant {
+export class Plant implements OnDestroy{
   public id:number;
   public name:string;
   public image:string;
@@ -40,6 +41,13 @@ export class Plant {
     this.updateWaterLevelTimer = setInterval(() => {
       this.recalcWaterLevel();
     }, 10000)
+  }
+
+  ngOnDestroy():void {
+    if (this.updateWaterLevelTimer) {
+      clearInterval(this.updateWaterLevelTimer);
+    }
+    console.log('destroyed Plant', this);
   }
 
   public getTimeLeftToWater():Date {

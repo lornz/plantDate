@@ -5,6 +5,7 @@ import { AddPage } from '../add/add';
 import { PlantsService } from '../../services/plants.service';
 import { Plant } from '../../services/plant';
 import { AppService } from '../../services/app.service';
+import { PlantNotificationService } from '../../services/plant-notification.service';
 
 @Component({
   selector: 'page-home',
@@ -15,7 +16,9 @@ export class HomePage {
 
   constructor(public navCtrl: NavController, public plantsService:PlantsService, 
               public alertCtrl: AlertController,
-              private renderer:Renderer, private appService:AppService) {
+              private renderer:Renderer, private appService:AppService,
+              private plantNotificationService:PlantNotificationService) {
+                console.log('plantNotificationService', plantNotificationService);
   }
 
   public goToAddPage(mode:string, editPlant:Plant):void {
