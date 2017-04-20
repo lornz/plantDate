@@ -1,7 +1,7 @@
 
 <ion-content class="bg-color-light" padding scrollY="true">
-  <ion-card #plantCard class="plant-card" *ngFor="let plant of plants; let i = index;">
-    <div class="card">
+  <ion-card #plantCard class="plant-card" *ngFor="let plant of plants; let i = index;" [@flyInOut]="'in'">
+    <div class="card" [class.justAdded]="i === 0">
       <div class="front" (click)="cardPress($event, plant, plantCard)">
         <img *ngIf="plant.image" src={{plant.image}} />
         <img *ngIf="!plant.image" src='assets/empty-state-new.jpg' />

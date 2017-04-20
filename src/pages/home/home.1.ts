@@ -18,16 +18,16 @@ import { PlantNotificationService } from '../../services/plant-notification.serv
   selector: 'page-home',
   templateUrl: 'home.html',
   animations:[ 
-   trigger('flyInOut', [
-      state('in', style({transform: 'translateX(0)'})),
-      transition('void => *', [
-        style({transform: 'translateX(-120%)'}),
-        animate("300ms 1000ms ease-in")
-      ]),
-      transition('* => void', [
-        animate("300ms 200ms ease-out", style({transform: 'translateX(120%)'}))
-      ])
-    ])]
+  trigger('plantCardAnimation',[
+    state('true', style({
+        transform: 'scale(1.2)',
+      })),
+    state('false', style({
+    transform: 'scale(1)',
+  })), 
+  transition('false => true', animate('100ms ease-in')),
+    transition('true => false', animate('100ms ease-out')),
+  ])]
 })
 export class HomePage {
   private flipping:boolean;

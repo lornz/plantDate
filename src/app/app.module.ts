@@ -2,6 +2,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule }   from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 // Ionic
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
@@ -29,6 +30,7 @@ import { PlantsService } from '../services/plants.service';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot(),
     FormsModule,
